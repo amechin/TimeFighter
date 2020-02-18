@@ -1,14 +1,16 @@
 package com.smallbuilder.timefighter
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
+import android.view.Menu
+import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -58,7 +60,31 @@ class MainActivity : AppCompatActivity() {
         } else{
             resetGame()
         }
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.actionAbout){
+            showInfo()
+        }
+        return true
+    }
+
+    @SuppressLint("StringFormatInvalid")
+    private fun showInfo(){
+        val dialogTitle = getString(R.string.aboutTitle, BuildConfig.VERSION_NAME)
+        val dialogMessage = getString(R.string.aboutMessage)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(dialogTitle)
+        builder.setMessage(dialogMessage)
+
+        builder.create().show()
     }
 
     private fun restoreGame() {
